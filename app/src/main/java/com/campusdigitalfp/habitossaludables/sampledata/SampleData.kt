@@ -1,4 +1,6 @@
-package com.campusdigitalfp.habitossaludables
+package com.campusdigitalfp.habitossaludables.sampledata
+
+import com.campusdigitalfp.habitossaludables.screens.Habito
 
 /**
  * Datos de ejemplo para Hábitos Saludables

@@ -17,13 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.campusdigitalfp.habitossaludables.R
 
-@Preview
 @Composable
-fun AboutScreen() {
+fun AboutScreen(navController: NavHostController) {
     Scaffold { paddingValues ->
         Column(
             modifier = Modifier
@@ -67,7 +66,9 @@ fun AboutScreen() {
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
-                onClick = { /* Acción para enviar comentarios */ },
+                onClick = { // Establece el valor de "key_result" en el savedStateHandle de la entrada anterior en la pila de navegación. Esto permite enviar datos de la pantalla actual a la pantalla anterior cuando se retrocede en la navegación.
+                    navController.previousBackStackEntry?.savedStateHandle?.set("key_result", "Hacer click en volver")
+                    navController.popBackStack()},
                 modifier = Modifier.padding(vertical = 8.dp)
             ) {
                 Text(text = "Volver")

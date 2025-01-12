@@ -13,35 +13,44 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.campusdigitalfp.habitossaludables.common.BarraSuperiorComun
+import com.campusdigitalfp.habitossaludables.ui.theme.HabitosSaludablesTheme
 
 @Composable
 fun HabitScreen(navController: NavHostController, habito: Habito) {
-    Scaffold { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues).padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            // Título del hábito
-
-            Text(
-                text = habito.titulo,
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(bottom = 8.dp),
-                textAlign = TextAlign.Justify
+    HabitosSaludablesTheme {
+        Scaffold(topBar = {
+            BarraSuperiorComun(
+                navController = navController,
+                atras = true
             )
+        }) { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues).padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                // Título del hábito
 
-            // Descripción del hábito
-            Text(
-                text = habito.descripcion,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
+                Text(
+                    text = habito.titulo,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    textAlign = TextAlign.Justify
+                )
 
-            // Botón para volver
-            Button(onClick = { navController.popBackStack() }) {
-                Text(text = "Volver")
+                // Descripción del hábito
+                Text(
+                    text = habito.descripcion,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                // Botón para volver
+                Button(onClick = { navController.popBackStack() }) {
+                    Text(text = "Volver")
+                }
             }
         }
     }

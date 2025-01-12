@@ -8,6 +8,7 @@ import com.campusdigitalfp.habitossaludables.sampledata.SampleData
 import com.campusdigitalfp.habitossaludables.screens.AboutScreen
 import com.campusdigitalfp.habitossaludables.screens.HabitListScreen
 import com.campusdigitalfp.habitossaludables.screens.HabitScreen
+import com.campusdigitalfp.habitossaludables.screens.NewHabitScreen
 
 
 @Composable
@@ -27,5 +28,6 @@ fun Navigation(){
                 HabitScreen(navController, it)
             }
         }
+        composable("new"){ NewHabitScreen(navController) }
     }
 }

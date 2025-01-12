@@ -18,11 +18,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -37,9 +44,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.campusdigitalfp.habitossaludables.R
+import com.campusdigitalfp.habitossaludables.common.BarraSuperiorComun
 import com.campusdigitalfp.habitossaludables.sampledata.SampleData
 import com.campusdigitalfp.habitossaludables.ui.theme.HabitosSaludablesTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitListScreen(navController: NavHostController) {
     // Obtiene el savedStateHandle de la entrada actual en la pila de navegación del NavController
@@ -64,7 +73,7 @@ fun HabitListScreen(navController: NavHostController) {
         }
     }
     HabitosSaludablesTheme {
-        Scaffold { paddingValues ->
+        Scaffold(topBar = { BarraSuperiorComun(navController = navController, atras = false) }){ paddingValues ->
             Column {
                 VistaListaHabitos(SampleData.habitSample, paddingValues = paddingValues, navController = navController)
 

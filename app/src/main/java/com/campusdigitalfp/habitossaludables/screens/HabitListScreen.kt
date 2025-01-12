@@ -1,6 +1,5 @@
 package com.campusdigitalfp.habitossaludables.screens
 
-import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
@@ -35,7 +34,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.campusdigitalfp.habitossaludables.R
@@ -74,16 +72,15 @@ fun HabitListScreen(navController: NavHostController) {
                     Text("Acerca de")
                 }
             }
-
         }
     }
 }
 
-data class Habito(val titulo: String, val descripcion: String)
+data class Habito(val id: Int, val titulo: String, val descripcion: String)
 
 @Composable
-fun VistaHabito(habito: Habito) {
-    Row(modifier = Modifier.padding(all = 8.dp)) {
+fun VistaHabito(habito: Habito, onClick: () -> Unit) {
+    Row(modifier = Modifier.padding(all = 8.dp).clickable(onClick = onClick)) {
         Image(
             painter = painterResource(id = R.drawable.estilo_de_vida),
             contentDescription = "Icono estilo de vida",
@@ -138,7 +135,9 @@ fun VistaListaHabitos(habitos: List<Habito>, paddingValues: PaddingValues, navCo
                 .padding(16.dp)
         ) {
             items(habitos) { habito ->
-                VistaHabito(habito)
+                VistaHabito(habito, onClick = {
+                    navController.navigate("details/${habito.id}")
+                })
             }
         }
 
@@ -154,15 +153,4 @@ fun IrAcercaDe(navController: NavHostController){
 }
 
 
-@Preview(
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true,
-    name = "Dark Mode"
-)
-@Preview(showBackground = true, name = "Light Mode")
-@Composable
-fun PreviewVistaHabito() {
-    HabitosSaludablesTheme {
-        VistaHabito(Habito("Comer saludable", "Objetivo de comer saludable todos los días de la semana"))
-    }
-}
+

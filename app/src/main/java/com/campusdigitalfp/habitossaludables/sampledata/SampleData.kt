@@ -3,7 +3,7 @@ package com.campusdigitalfp.habitossaludables.sampledata
 import android.content.Context
 import androidx.compose.runtime.mutableStateListOf
 import com.campusdigitalfp.habitossaludables.R
-import com.campusdigitalfp.habitossaludables.screens.Habito
+import com.campusdigitalfp.habitossaludables.common.Habito
 
 /**
  * Datos de ejemplo para Hábitos Saludables

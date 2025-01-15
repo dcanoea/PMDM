@@ -43,6 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.campusdigitalfp.habitossaludables.R
 import com.campusdigitalfp.habitossaludables.common.BarraSuperiorComun
+import com.campusdigitalfp.habitossaludables.common.Habito
+import com.campusdigitalfp.habitossaludables.navigation.NavRoutes
 import com.campusdigitalfp.habitossaludables.sampledata.SampleData
 import com.campusdigitalfp.habitossaludables.ui.theme.HabitosSaludablesTheme
 
@@ -77,8 +79,6 @@ fun HabitListScreen(navController: NavHostController) {
         }
     }
 }
-
-data class Habito(val id: Int, val titulo: String, val descripcion: String)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -164,7 +164,7 @@ fun VistaListaHabitos(habitos: List<Habito>, paddingValues: PaddingValues, navCo
                             selectedHabits.add(habito)
                         }
                     } else {
-                        navController.navigate("details/${habito.id}")
+                        navController.navigate(NavRoutes.Details.abreviatura + habito.id)
                     }
                 }, onLongClick = {
                     isActionMode.value = true

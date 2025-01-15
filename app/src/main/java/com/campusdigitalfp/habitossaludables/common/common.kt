@@ -24,12 +24,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.campusdigitalfp.habitossaludables.R
+import com.campusdigitalfp.habitossaludables.navigation.NavRoutes
 import com.campusdigitalfp.habitossaludables.sampledata.SampleData
-import com.campusdigitalfp.habitossaludables.screens.Habito
+
+data class Habito(val id: Int, var titulo: String, var descripcion: String)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BarraSuperiorComun(navController: NavHostController, atras: Boolean = true, isActionMode: MutableState<Boolean> = remember { mutableStateOf(false) }, selectedHabits: MutableList<Habito> = remember { mutableStateListOf<Habito>() }) {
+fun BarraSuperiorComun(navController: NavHostController, atras: Boolean = true,
+                       isActionMode: MutableState<Boolean> = remember { mutableStateOf(false) },
+                       selectedHabits: MutableList<Habito> = remember { mutableStateListOf() }) {
     var expanded by remember { mutableStateOf(false) }
 
     TopAppBar(
@@ -61,7 +65,7 @@ fun BarraSuperiorComun(navController: NavHostController, atras: Boolean = true, 
                     onDismissRequest = { expanded = false }
                 ) {
                     DropdownMenuItem(
-                        onClick = { navController.navigate("new") },
+                        onClick = { navController.navigate("New") },
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Filled.Add,
@@ -72,7 +76,7 @@ fun BarraSuperiorComun(navController: NavHostController, atras: Boolean = true, 
                         text = { Text("Nuevo") }
                     )
                     DropdownMenuItem(
-                        onClick = { navController.navigate("about") },
+                        onClick = { navController.navigate(NavRoutes.About.abreviatura) },
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Filled.Info,

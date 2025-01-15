@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.campusdigitalfp.habitossaludables.R
 import com.campusdigitalfp.habitossaludables.common.BarraSuperiorComun
+import com.campusdigitalfp.habitossaludables.common.Habito
 import com.campusdigitalfp.habitossaludables.sampledata.SampleData.habitSample
 import com.campusdigitalfp.habitossaludables.ui.theme.HabitosSaludablesTheme
 

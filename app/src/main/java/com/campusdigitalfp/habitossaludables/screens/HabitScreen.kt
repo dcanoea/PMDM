@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.campusdigitalfp.habitossaludables.R
 import com.campusdigitalfp.habitossaludables.common.BarraSuperiorComun
+import com.campusdigitalfp.habitossaludables.common.Habito
+import com.campusdigitalfp.habitossaludables.navigation.NavRoutes
 
 @Composable
 fun HabitScreen(navController: NavHostController, habito: Habito) {
@@ -38,6 +40,11 @@ fun HabitScreen(navController: NavHostController, habito: Habito) {
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
+
+            Button(onClick = { navController.navigate(NavRoutes.Edit.abreviatura + habito.id) }) {
+                Text(text = "Editar")
+            }
+
             Button(onClick = { navController.popBackStack() }) {
                 Text(text = stringResource(R.string.volver))
             }

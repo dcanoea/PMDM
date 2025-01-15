@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Healthy Habits</string>
+    <string name="beber_agua">Drink Water</string>
+    <string name="aseg_rate_de_beber_al_menos_2_litros_de_agua_al_d_a_para_mantenerte_hidratado">Make sure to drink at least 2 liters of water daily to stay hydrated.</string>
+    <string name="ejercicio_diario">Daily Exercise</string>
+    <string name="realiza_al_menos_30_minutos_de_ejercicio_cada_d_a_para_mantenerte_en_forma">Do at least 30 minutes of exercise every day to stay in shape.</string>
+    <string name="meditaci_n">Meditation</string>
+    <string name="dedica_10_minutos_al_d_a_a_la_meditaci_n_para_reducir_el_estr_s_y_mejorar_la_concentraci_n">Spend 10 minutes a day meditating to reduce stress and improve focus.</string>
+    <string name="leer_un_libro">Read a Book</string>
+    <string name="lee_al_menos_un_libro_al_mes_para_enriquecer_tu_conocimiento_y_estimular_tu_mente">Read at least one book a month to enrich your knowledge and stimulate your mind.</string>
+    <string name="dormir_bien">Sleep Well</string>
+    <string name="intenta_dormir_entre_7_y_8_horas_cada_noche_para_mejorar_tu_salud_mental_y_f_sica">Try to sleep between 7 and 8 hours every night to improve your mental and physical health.</string>
+    <string name="comer_frutas_y_verduras">Eat Fruits and Vegetables</string>
+    <string name="incluye_al_menos_5_porciones_de_frutas_y_verduras_en_tu_dieta_diaria_para_una_alimentaci_n_balanceada">Include at least 5 servings of fruits and vegetables in your daily diet for balanced nutrition.</string>
+    <string name="desconectar_de_las_pantallas">Disconnect from Screens</string>
+    <string name="t_mate_un_descanso_de_las_pantallas_al_menos_una_hora_antes_de_dormir_para_mejorar_la_calidad_del_sue_o">Take a break from screens at least an hour before bed to improve sleep quality.</string>
+    <string name="practicar_la_gratitud">Practice Gratitude</string>
+    <string name="anota_tres_cosas_por_las_que_est_s_agradecido_cada_d_a_para_fomentar_una_mentalidad_positiva">Write down three things youre grateful for each day to foster a positive mindset.</string>
+    <string name="planificar_el_d_a">Plan Your Day</string>
+    <string name="dedica_unos_minutos_cada_ma_ana_para_planificar_tus_tareas_y_establecer_prioridades">Spend a few minutes every morning planning your tasks and setting priorities.</string>
+    <string name="socializar">Socialize</string>
+    <string name="con_ctate_con_amigos_y_familiares_al_menos_una_vez_a_la_semana_para_fortalecer_tus_relaciones">Connect with friends and family at least once a week to strengthen your relationships.</string>
+    <string name="definicion_app">Healthy Habits is an app that helps you maintain a healthy lifestyle by tracking daily habits like hydration, physical activity, and rest.</string>
+    <string name="logo_de_la_aplicaci_n">App Logo</string>
+    <string name="versi_n_1_0_0">Version: 1.0.0</string>
+    <string name="icono_estilo_de_vida">Lifestyle Icon</string>
+    <string name="animaciondecolor">ColorAnimation</string>
+    <string name="volver">Back</string>
+    <string name="nuevo_h_bito">New Habit</string>
+    <string name="t_tulo_del_h_bito">Habit Title</string>
+    <string name="descripci_n_del_h_bito">Habit Description</string>
+    <string name="operaci_n_cancelada">Operation Canceled</string>
+    <string name="cancelar">Cancel</string>
+    <string name="h_bito_creado_con_xito">Habit Successfully Created</string>
+    <string name="guardar">Save</string>
+    <string name="men_de_opciones">Options Menu</string>
+    <string name="a_adir_nuevo_h_bito">Add New Habit</string>
+    <string name="acerca_de">About</string>
+    <string name="eliminar_seleccionados">Delete Selected</string>
+</resources>

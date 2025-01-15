@@ -3,9 +3,11 @@ package com.campusdigitalfp.habitossaludables.screens
 import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,29 +20,25 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.campusdigitalfp.habitossaludables.R
@@ -48,64 +46,67 @@ import com.campusdigitalfp.habitossaludables.common.BarraSuperiorComun
 import com.campusdigitalfp.habitossaludables.sampledata.SampleData
 import com.campusdigitalfp.habitossaludables.ui.theme.HabitosSaludablesTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitListScreen(navController: NavHostController) {
-    // Obtiene el savedStateHandle de la entrada actual en la pila de navegación del NavController
     val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
-    // Verifica si el savedStateHandle no es nulo antes de continuar
-    if (savedStateHandle != null) {
-        // Obtiene el contexto actual necesario para mostrar un Toast
-        val context = LocalContext.current
+    val context = LocalContext.current
+    val isActionMode = remember { mutableStateOf(false) }
+    val selectedHabits = remember { mutableStateListOf<Habito>() }
 
-        // Define una variable "result" que observa un LiveData llamado "key_result" almacenado en savedStateHandle
-        // Con observeAsState(), se convierte el LiveData en un estado observable por Compose
+    if (savedStateHandle != null) {
+        // Observa el valor de "key_result" del savedStateHandle como un State.
         val result by savedStateHandle.getLiveData<String>("key_result").observeAsState()
 
-        // Usa let para ejecutar un bloque solo si "result" no es nulo
-        result.let {
-            // LaunchedEffect ejecuta el bloque cada vez que "result" cambia
+        result?.let {
+            // LaunchedEffect se activa cuando `it` cambia, mostrando el Toast una sola vez.
             LaunchedEffect(it) {
-                // Si el valor de "result" no es nulo, muestra un Toast con el valor de "result"
-                if (it != null)
-                    Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
             }
         }
     }
-    HabitosSaludablesTheme {
-        Scaffold(topBar = { BarraSuperiorComun(navController = navController, atras = false) }){ paddingValues ->
-            Column {
-                VistaListaHabitos(SampleData.habitSample, paddingValues = paddingValues, navController = navController)
 
-                Button(onClick = { navController.navigate("about") }) {
-                    Text("Acerca de")
-                }
-            }
+    HabitosSaludablesTheme {
+        Scaffold(topBar = { BarraSuperiorComun(navController, false, isActionMode, selectedHabits) }) { paddingValues ->
+            VistaListaHabitos(
+                SampleData.habitSample,
+                paddingValues = paddingValues,
+                navController,
+                isActionMode,
+                selectedHabits
+            )
         }
     }
 }
 
 data class Habito(val id: Int, val titulo: String, val descripcion: String)
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun VistaHabito(habito: Habito, onClick: () -> Unit) {
-    Row(modifier = Modifier.padding(all = 8.dp).clickable(onClick = onClick)) {
+fun VistaHabito(habito: Habito, onClick: () -> Unit, onLongClick: () -> Unit, isSelected: Boolean) {
+    Row(
+        modifier = Modifier
+            .padding(all = 8.dp)
+            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
+    ) {
         Image(
-            painter = painterResource(id = R.drawable.estilo_de_vida),
-            contentDescription = "Icono estilo de vida",
-            modifier = Modifier.size(40.dp)
+            painter = painterResource(if (isSelected) R.drawable.estilo_de_vida else R.drawable.estilo_de_vida),
+            contentDescription = stringResource(R.string.icono_estilo_de_vida),
+            modifier = Modifier
+                .size(40.dp)
                 .clip(CircleShape)
                 .border(1.5.dp, MaterialTheme.colorScheme.primary, CircleShape)
-
         )
         Spacer(modifier = Modifier.width(8.dp))
 
+        // Mantenemos un registro de si el mensaje está expandido o no en este
         var isExpanded by remember { mutableStateOf(false) }
+        // surfaceColor se actualizará gradualmente de un color a otro
         val surfaceColor by animateColorAsState(
             if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
-            label = "AnimacionDeColor",
+            label = stringResource(R.string.animaciondecolor),
         )
 
+        // Cambiamos el estado de la variable isExpanded cuando hacemos clic en esta Columna
         Column(modifier = Modifier.clickable { isExpanded = !isExpanded }) {
             Text(
                 text = habito.titulo,
@@ -116,12 +117,18 @@ fun VistaHabito(habito: Habito, onClick: () -> Unit) {
             Surface(
                 shape = MaterialTheme.shapes.medium,
                 shadowElevation = 1.dp,
+                // el color surfaceColor cambiará gradualmente de primario a surface
                 color = surfaceColor,
-                modifier = Modifier.animateContentSize().padding(1.dp)
+                // animateContentSize cambiará el tamaño de la Superficie gradualmente
+                modifier = Modifier
+                    .animateContentSize()
+                    .padding(1.dp)
             ) {
                 Text(
                     text = habito.descripcion,
                     modifier = Modifier.padding(4.dp),
+                    // Si el mensaje está expandido, mostramos el contenido
+                    // de lo contrario, solo mostramos la primera línea
                     maxLines = if (isExpanded) Int.MAX_VALUE else 1,
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -131,12 +138,13 @@ fun VistaHabito(habito: Habito, onClick: () -> Unit) {
 }
 
 @Composable
-fun VistaListaHabitos(habitos: List<Habito>, paddingValues: PaddingValues, navController: NavHostController) {
+fun VistaListaHabitos(habitos: List<Habito>, paddingValues: PaddingValues, navController: NavHostController, isActionMode: MutableState<Boolean>, selectedHabits: MutableList<Habito>) {
     Column(
         modifier = Modifier
             .padding(paddingValues)
             .fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         LazyColumn(
             modifier = Modifier
@@ -145,21 +153,26 @@ fun VistaListaHabitos(habitos: List<Habito>, paddingValues: PaddingValues, navCo
         ) {
             items(habitos) { habito ->
                 VistaHabito(habito, onClick = {
-                    navController.navigate("details/${habito.id}")
-                })
+                    if (isActionMode.value) {
+                        // Seleccionar/deseleccionar película
+                        if (selectedHabits.contains(habito)) {
+                            selectedHabits.remove(habito)
+                            if (selectedHabits.isEmpty()) {
+                                isActionMode.value = false // Desactiva action mode
+                            }
+                        } else {
+                            selectedHabits.add(habito)
+                        }
+                    } else {
+                        navController.navigate("details/${habito.id}")
+                    }
+                }, onLongClick = {
+                    isActionMode.value = true
+                    selectedHabits.add(habito) // Agregar a la selección
+                },
+                    isSelected = selectedHabits.contains(habito)
+                )
             }
         }
-
-        IrAcercaDe(navController = navController)
     }
 }
-
-@Composable
-fun IrAcercaDe(navController: NavHostController){
-    Button(onClick = { navController.navigate("about") }) {
-        Text("Acerca de")
-    }
-}
-
-
-
